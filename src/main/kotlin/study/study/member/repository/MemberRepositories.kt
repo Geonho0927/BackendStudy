@@ -8,4 +8,4 @@ interface MemberRepository : JpaRepository<Member, Long> {
     fun findByLoginId(loginId: String): Member?
 }
 
-interface MemberRepositories : JpaRepository<MemberRole, Long>
+interface MemberRoleRepository : JpaRepository<MemberRole, Long>

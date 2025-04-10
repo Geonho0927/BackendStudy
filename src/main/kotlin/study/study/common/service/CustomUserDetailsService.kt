@@ -20,7 +20,7 @@ class CustomUserDetailsService(
             ?.let { createUserDetails(it) } ?: throw UsernameNotFoundException("해당 유저는 없습니다.")
 
 
-    private fun createUserDetails(member = Member): UserDetails =
+    private fun createUserDetails(member : Member): UserDetails =
         User(
             member.loginId,
             passwordEncoder.encode(member.password),

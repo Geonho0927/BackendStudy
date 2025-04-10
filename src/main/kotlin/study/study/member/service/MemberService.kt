@@ -13,12 +13,13 @@ import study.study.member.dto.MemberDtoRequest
 import study.study.member.entity.Member
 import study.study.member.entity.MemberRole
 import study.study.member.repository.MemberRepository
+import study.study.member.repository.MemberRoleRepository
 
 @Transactional
 @Service
 class MemberService(
     private val memberRepository: MemberRepository,
-    private val memberRoleRepository: MemberRepository,
+    private val memberRoleRepository: MemberRoleRepository,
     private val authenticationManager: AuthenticationManagerBuilder,
     private val jwtTokenProvider: JwtTokenProvider,
     private val authenticationManagerBuilder: AuthenticationManagerBuilder
