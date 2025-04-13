@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
+import study.study.common.dto.CustomUser
 import java.security.Principal
 import java.util.*
 
@@ -40,6 +41,7 @@ class JwtTokenProvider {
             .builder()
             .subject(authentication.name)
             .claim("auth", authorities)
+            .claim("userId", (authentication.principal as CustomUser).userId)
             .issuedAt(now)
             .expiration(accessExpiration)
             .signWith(key, Jwts.SIG.HS256)
@@ -55,21 +57,20 @@ class JwtTokenProvider {
         val claims: Claims = getClaims(token)
 
         val auth = claims["auth"] ?: throw RuntimeException("잘못된 토큰입니다.")
+        val userId = claims["userId"] ?: throw RuntimeException("잘못된 토큰입니다.")
 
         // 권한 정보 추출
         val authorities: Collection<GrantedAuthority> = (auth as String)
             .split(",")
             .map { SimpleGrantedAuthority(it) }
 
-        val principal: UserDetails = User(claims.subject, "", authorities)
+        val principal: UserDetails = CustomUser(userId.toString().toLong(),claims.subject, "", authorities)
 
         return UsernamePasswordAuthenticationToken(principal, "", authorities)
     }
 
     /**
-     * Token
-    검증
-
+     * Token 검증
      */
     fun validateToken(token: String): Boolean {
         try {

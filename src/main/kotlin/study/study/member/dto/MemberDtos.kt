@@ -11,7 +11,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class MemberDtoRequest(
-    val id: Long?,
+    var id: Long?,
 
     @field:NotBlank
     @JsonProperty("lginId")
@@ -71,3 +71,11 @@ data class LoginDto(
     val password: String
         get() = _password!!
 }
+
+data class MemberDtoResponse(
+    val id: Long,
+    val loginId: String,
+    val name: String,
+    val dormitory: Dormitory,
+    val email: String,
+)

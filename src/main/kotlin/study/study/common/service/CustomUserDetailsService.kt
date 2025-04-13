@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import study.study.common.dto.CustomUser
 import study.study.member.entity.Member
 import study.study.member.repository.MemberRepository
 
@@ -21,7 +22,8 @@ class CustomUserDetailsService(
 
 
     private fun createUserDetails(member : Member): UserDetails =
-        User(
+        CustomUser(
+            member.id!!,
             member.loginId,
             passwordEncoder.encode(member.password),
             member.memberRole!!.map { SimpleGrantedAuthority("ROLE_${it.role}")}
