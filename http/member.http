@@ -1,0 +1,23 @@
+###회원가입
+POST http://localhost:8080/api/member/signup
+Content-Type: application/json
+
+{
+  "loginId" : "aaqwer",
+  "password" : "asdf1234!",
+  "name" : "asdf",
+  "dormitory" : "GOWOONA",
+  "email" : "ads123@naver.com"
+}
+
+### 로그인
+POST http://localhost:8080/api/member/login
+Content-Type: application/json
+
+{
+  "loginId" : "aaqwer",
+  "password" : "asdf1234!"
+}
+> {%
+    client.global.set("acToken,response.body.data.accessToken")
+%}

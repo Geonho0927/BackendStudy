@@ -26,6 +26,7 @@ data class PostDtoRequest(
     val content: String
         get() = _content!!.toString()
 
-    fun toEntity(): PostEntity =
-        PostEntity(null, title, content, likes, dislikes, writer, createDate)
+    fun toEntity(writer: String): PostEntity {
+        return PostEntity(null, title, content, likes, dislikes, writer, createDate)
+    }
 }
