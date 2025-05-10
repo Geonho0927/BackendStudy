@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import study.study.common.status.Dormitory
 import jakarta.validation.constraints.Pattern
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder
 import study.study.common.annotation.ValidEnum
 import study.study.member.entity.Member
 import java.time.LocalDate
@@ -41,10 +42,12 @@ data class MemberDtoRequest(
     @JsonProperty("email")
     private val _email: String?,
 ) {
+    private val encoder = SCryptPasswordEncoder(16, 8, 1, 8, 8)
+
     val loginId: String
         get() = _loginId!!
-    val password: String
-        get() = _password!!
+    private val password: String
+        get() = encoder.encode(_password)
     val name: String
         get() = _name!!
     val dormitory: Dormitory
