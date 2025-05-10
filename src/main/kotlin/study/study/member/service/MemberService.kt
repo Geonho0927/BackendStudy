@@ -71,4 +71,12 @@ class MemberService(
         memberRepository.save(member)
         return "수정 완료되었습니다."
     }
+    /**
+     * 같은 기숙사 타입 리스트
+     */
+    fun dormInfo(id: Long): List<MemberDtoResponse> {
+        val dormType = memberRepository.findByIdOrNull(id)!!.dormitory
+        val result = memberRepository.findAllByDormType(dormType)
+        return result.map { it.toDto() }
+    }
 }
